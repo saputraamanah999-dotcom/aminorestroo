@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Amino Resto | Natural Luxury Dining</title>
+  <meta name="description" content="Amino Resto - pengalaman kuliner natural luxury, menu premium, booking meja, checkout online, dan tracking pesanan realtime.">
+  <link rel="icon" href="assets/logo.svg" type="image/svg+xml">
+  <link rel="preload" href="css/main.css" as="style">
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/animations.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+  <div id="announcement" class="announcement">Welcome to Amino Resto. PRICES ARE NOT FIXED. Tax 10% and service 5% apply.</div>
+  <header class="site-header">
+    <nav class="navbar container" aria-label="Main navigation">
+      <a class="brand" href="#/home"><img src="assets/logo.svg" alt="Amino Resto logo"><span>Amino Resto</span></a>
+      <button id="navToggle" class="icon-button mobile-only" aria-label="Toggle navigation">☰</button>
+      <div id="navLinks" class="nav-links">
+        <a href="#/home">Home</a><a href="#/menu">Menu</a><a href="#/gallery">Gallery</a><a href="#/reviews">Reviews</a><a href="#/orders">Orders</a><a href="#/profile">Profile</a>
+      </div>
+      <div class="nav-actions">
+        <button id="adminNavButton" class="btn btn-ghost hidden">Admin</button>
+        <button id="cartButton" class="btn btn-ghost">Cart <span id="cartBadge" class="badge">0</span></button>
+        <div id="authNav" class="auth-nav"><a class="btn btn-ghost" href="#/login">Login</a><a class="btn btn-primary" href="#/register">Register</a></div>
+      </div>
+    </nav>
+  </header>
+
+  <main id="app" tabindex="-1"></main>
+
+  <aside id="cartDrawer" class="drawer" aria-hidden="true">
+    <div class="drawer-panel">
+      <div class="drawer-head"><h2>Your Cart</h2><button id="closeCart" class="icon-button">×</button></div>
+      <div id="cartItems"></div>
+      <div class="totals">
+        <div><span>Subtotal</span><strong id="cartSubtotal">Rp0</strong></div>
+        <div><span>Tax 10%</span><strong id="cartTax">Rp0</strong></div>
+        <div><span>Service 5%</span><strong id="cartService">Rp0</strong></div>
+        <div class="grand"><span>Total</span><strong id="cartTotal">Rp0</strong></div>
+        <small>PRICES ARE NOT FIXED. Final price may be adjusted by Amino Resto.</small>
+      </div>
+      <a id="checkoutButton" class="btn btn-primary full" href="#/cart">Checkout</a>
+    </div>
+  </aside>
+
+  <div id="modalRoot"></div>
+  <footer class="footer">
+    <div class="container footer-grid">
+      <div><h3>Amino Resto</h3><p>Natural luxury dining with honest ingredients. PRICES ARE NOT FIXED. Tax 10% and service 5% apply.</p></div>
+      <div><h4>Contact</h4><button id="footerWhatsapp" class="link-button">Open WhatsApp</button><button id="footerLocation" class="link-button">Get location</button></div>
+      <div><h4>Delivery</h4><a href="https://gojek.com" target="_blank" rel="noreferrer">Gojek</a><a href="https://food.grab.com" target="_blank" rel="noreferrer">GrabFood</a></div>
+    </div>
+  </footer>
+
+  <script src="js/config.js"></script>
+  <script src="js/utils.js"></script>
+  <script src="js/storage.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/menu.js"></script>
+  <script src="js/cart.js"></script>
+  <script src="js/checkout.js"></script>
+  <script src="js/orders.js"></script>
+  <script src="js/reviews.js"></script>
+  <script src="js/gallery.js"></script>
+  <script src="js/settings.js"></script>
+  <script src="js/realtime.js"></script>
+  <script src="js/admin.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

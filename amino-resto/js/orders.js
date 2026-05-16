@@ -1,0 +1,6 @@
+(function(A){
+  A.orders = { list:[], async load(){ if(!A.auth.user) return; const {data}=await A.supabase.from('orders').select('*, order_items(*)').eq('user_id',A.auth.user.id).order('created_at',{ascending:false}); this.list=data||[]; },
+    view(){ if(!A.auth.user) return `<section class="section container">${A.empty('Login untuk melihat order tracking realtime.')}</section>`; return `<section class="section container"><h1>Order tracking realtime</h1><div class="grid">${this.list.length?this.list.map(o=>`<article class="card"><div class="section-head"><div><strong>Order #${o.id.slice(0,8)}</strong><p>${new Date(o.created_at).toLocaleString('id-ID')}</p></div><span class="status ${o.status}">${o.status}</span></div><p>Total ${A.formatRupiah(o.total)}</p><div class="receipt"><strong>Receipt</strong><p>PRICES ARE NOT FIXED</p><p>Tax 10%: ${A.formatRupiah(o.tax)} | Service 5%: ${A.formatRupiah(o.service_fee)}</p><button class="btn btn-ghost print-receipt">Print receipt</button></div></article>`).join(''):A.empty('Belum ada pesanan.')}</div></section>`; },
+    bind(){ A.$$('.print-receipt').forEach(b=>b.addEventListener('click',()=>window.print())); }
+  };
+})(window.Amino = window.Amino || {});
