@@ -1,0 +1,9 @@
+(function(A){
+  A.realtime={channels:[], connected:false, fallbackTimer:null,
+    start(){ if(!A.supabase) return; this.stop(); const tables=['orders','bookings','reviews','menu_items','gallery','restaurant_settings','promos']; let subscribed=0; tables.forEach(table=>{ const ch=A.supabase.channel(`amino:${table}`).on('postgres_changes',{event:'*',schema:'public',table},payload=>this.handle(table,payload)).subscribe(status=>{ if(status==='SUBSCRIBED'){ subscribed++; this.connected=true; this.renderStatus(); } if(status==='CHANNEL_ERROR'||status==='TIMED_OUT'){ this.connected=false; this.startFallback(); this.renderStatus(); } }); this.channels.push(ch); }); this.fallbackTimer=setTimeout(()=>{ if(!this.connected) this.startFallback(); },6000); },
+    handle(table,payload){ if(table==='orders' && A.auth.profile?.role==='admin') A.browserNotify('New order update','Admin dashboard diperbarui realtime.'); if(table==='bookings' && A.auth.profile?.role==='admin') A.browserNotify('New booking','Ada booking baru.'); if(table==='reviews' && A.auth.profile?.role==='admin') A.browserNotify('New review','Ada review baru.'); if(table==='orders' && A.auth.user && payload.new?.user_id===A.auth.user.id) A.browserNotify('Order updated',`Status order: ${payload.new.status}`); A.router?.render(); },
+    startFallback(){ clearInterval(this.fallbackTimer); this.fallbackTimer=setInterval(()=>A.router?.render(),30000); this.renderStatus(); },
+    renderStatus(){ const el=A.$('#realtimeStatus'); if(el) el.textContent=this.connected?'Realtime connected':'Realtime fallback: refresh 30s'; const cust=A.$('#customerRealtimeStatus'); if(cust) cust.textContent=`Realtime ${this.connected?'connected':'fallback'}`; },
+    stop(){ this.channels.forEach(ch=>A.supabase.removeChannel(ch)); this.channels=[]; clearInterval(this.fallbackTimer); }
+  };
+})(window.Amino = window.Amino || {});
