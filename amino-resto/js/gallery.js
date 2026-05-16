@@ -1,0 +1,3 @@
+(function(A){
+  A.gallery={items:[], async load(){ const {data}=await A.supabase.from('gallery').select('*').eq('is_visible',true).order('sort_order'); this.items=data||[]; }, view(){ return `<section class="section container"><div class="section-head"><div><p class="eyebrow">Gallery</p><h1>Masonry moments</h1></div></div><div class="masonry">${this.items.length?this.items.map(g=>`<article class="card"><img class="gallery-tile" src="${A.escape(g.image_url||A.placeholder('gallery'))}" alt="${A.escape(g.title||'Amino gallery')}"><h3>${A.escape(g.title||'Amino moment')}</h3></article>`).join(''):A.empty('Gallery kosong, placeholder siap digunakan.')}</div></section>`; } };
+})(window.Amino = window.Amino || {});
